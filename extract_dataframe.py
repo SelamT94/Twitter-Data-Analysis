@@ -89,25 +89,48 @@ class TweetDfExtractor:
     def is_sensitive(self)->list:
         is_sensetive=[]
         for row in self.tweet_list:
-          if "possibly_sensitive":
-            is_sensetive.append(row{'possibly_sensitive'})
-          else
+          if "possibly_sensitive"in row.keys:
+            is_sensetive.append (row['possibly_sensitive'])
+          else:
             is_sensitive.append(' ') 
             pass
 
         return is_sensitive
 
     def find_favourite_count(self)->list:
-        
+        favourite_count = []
+        for row in self.tweets_list:
+            favourite_count.append(row['retweets_count'])
+        return favourite_count
     
-     def find_retweet_count(self)->list:
+    def find_retweet_count(self)->list:
         retweet_count = []
         for row in self.tweets_list:
              retweet_count.append(row['retweets_count'])
         return retweet_count
 
+    def find_hashtags(self)->list:
+        hashtags =[]
+        for row in self.tweets_list:
+             hashtags.append(row['hashtags'])
+        return hashtags
 
-        
+    def find_mentions(self)->list:
+        mentions =[]
+        for row in self.tweets_list:
+             mentions.append(row['mentions'])
+        return mentions
+
+
+    def find_location(self)->list:
+        location=[]
+        for row in self.tweet_list:
+         try:
+            location.append(row['place'])
+         except TypeError:
+            location.append(' ') 
+    
+        return location
         
     def get_tweet_df(self, save=False)->pd.DataFrame:
         """required column to be generated you should be creative and add more features"""
